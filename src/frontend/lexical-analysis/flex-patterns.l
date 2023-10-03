@@ -36,6 +36,8 @@ whitespace		[ \f\n\r\t\v]
 "FROM"                                      { return FromPrefixPatternAction(yytext, yyleng);}
 "{"											{ return OpenCurlyBracketPatternAction(yytext); }
 "}"											{ return CloseCurlyBracketPatternAction(yytext); }
+"RETRIEVE"									{ return RetrievePrefixPatternAction(yytext, yyleng); }
+"URL"   									{ return URLPatternAction(yytext, yyleng); }
 
 "("											{ return OpenParenthesisPatternAction(yytext); }
 ")"											{ return CloseParenthesisPatternAction(yytext); }

@@ -22,6 +22,8 @@
 	int constant;
 	// -------------------------- Nuestros no terminales
 	int fromblock;
+	int retrieveblock;
+	int innerfromblock;
 
 	// Terminales.
 	token token;
@@ -40,6 +42,8 @@
 %token <token> FROM
 %token <token> OPEN_CURLY_BRACKET
 %token <token> CLOSE_CURLY_BRACKET
+%token <token> RETRIEVE
+%token <token> URL
 
 
 
@@ -55,6 +59,8 @@
 %type <constant> constant
 // ------------------------ Nuestros no-terminales
 %type <fromblock> fromblock
+%type <retrieveblock> retrieveblock
+%type <innerfromblock> innerfromblock
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -82,8 +88,12 @@ factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				{ $$ = ExpressionFactor
 constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
 	; */
 
-program: fromblock													{ $$ = ProgramGrammarAction($1); }
+program: fromblock retrieveblock									{ $$ = ProgramGrammarAction($1); }
 	;
 
-fromblock : FROM OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
+fromblock : FROM OPEN_CURLY_BRACKET innerfromblock CLOSE_CURLY_BRACKET
+
+innerfromblock: URL
+
+retrieveblock: RETRIEVE OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
 %%

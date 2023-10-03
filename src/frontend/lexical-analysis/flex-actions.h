@@ -35,6 +35,8 @@ token SubtractionOperatorPatternAction();
 token FromPrefixPatternAction();
 token OpenCurlyBracketPatternAction();
 token CloseCurlyBracketPatternAction();
+token RetrievePrefixPatternAction();
+token URLPatternAction();
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);

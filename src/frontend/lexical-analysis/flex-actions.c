@@ -115,3 +115,13 @@ token CloseCurlyBracketPatternAction() {
 	LogDebug("[Flex] CloseCurlyBracketPatternAction: '}'.");
 	return CLOSE_CURLY_BRACKET;
 }
+
+token RetrievePrefixPatternAction() {
+	LogDebug("[Flex] RetrievePrefixPatternAction: 'RETRIEVE'.");
+	return RETRIEVE;
+}
+
+token URLPatternAction() {
+	LogDebug("[Flex] URLPatternAction: 'URL'.");
+	return URL;
+}
