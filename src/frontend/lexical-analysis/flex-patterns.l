@@ -21,6 +21,9 @@ digit			[0-9]
 endline			[\n]
 whitespace		[ \f\n\r\t\v]
 url             https?:\/\/([a-zA-Z0-9$\-_.+!*'(),%;:@&=]+(?:\/[a-zA-Z0-9$\-_.+!*'(),%;:@&=]*)*(?:\?[a-zA-Z0-9$\-_.+!*'(),%;:@&=\/]*)?(?:#[a-zA-Z0-9$\-_.+!*'(),%;:@&=\/]*)?)
+word            [a-zA-Z0-9$\-_.+!*',%;:@&=]+
+/* password        ^.*$ */
+variable        [a-zA-Z0-9_]+
 
 %%
 
@@ -42,13 +45,18 @@ url             https?:\/\/([a-zA-Z0-9$\-_.+!*'(),%;:@&=]+(?:\/[a-zA-Z0-9$\-_.+!
 "TO"   									    { return ToPrefixPatternAction(yytext, yyleng); }
 "AUTH"   									{ return AuthPrefixPatternAction(yytext, yyleng); }
 {url}                                       { return UrlTypePatternAction(yytext, yyleng); }
+"ID"                                        { return IdPatternAction(yytext, yyleng); }
 
 "("											{ return OpenParenthesisPatternAction(yytext); }
 ")"											{ return CloseParenthesisPatternAction(yytext); }
+";"											{ return SemicolonPatternAction(yytext); }
 
 {digit}+									{ return IntegerPatternAction(yytext, yyleng); }
 
 {whitespace}+								{ IgnoredPatternAction(yytext, yyleng); }
+
+{word}                                      { return WordTypePatternAction(yytext, yyleng); }
+{variable}                                  { return VariableTypePatternAction(yytext, yyleng); }
 
 .											{ return UnknownPatternAction(yytext, yyleng); }
 

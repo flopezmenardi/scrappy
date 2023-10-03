@@ -1,4 +1,4 @@
-%{
+ %{
 
 #include "bison-actions.h"
 
@@ -24,6 +24,7 @@
 	int fromblock;
 	int retrieveblock;
 	int innerfromblock;
+	int innerretrieveblock;
 	int toblock;
 	int authblock;
 
@@ -51,9 +52,13 @@
 %token <token> URL
 %token <token> TO
 %token <token> AUTH
+%token <token> ID
+%token <token> SEMICOLON
 
 // ------------------------ Nuestros data types
 %token <string> TYPE_URL
+%token <string> TYPE_WORD
+%token <string> TYPE_VARIABLE
 
 
 %token <token> OPEN_PARENTHESIS
@@ -70,12 +75,13 @@
 %type <fromblock> fromblock
 %type <retrieveblock> retrieveblock
 %type <innerfromblock> innerfromblock
+%type <innerretrieveblock> innerretrieveblock
 %type <toblock> toblock
 %type <authblock> authblock
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
-%left ADD SUB
-%left MUL DIV
+//%left ADD SUB
+//%left MUL DIV
 
 // El símbolo inicial de la gramatica.
 %start program
@@ -99,16 +105,18 @@ factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				{ $$ = ExpressionFactor
 constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
 	; */
 
-program: fromblock retrieveblock toblock authblock									{ $$ = ProgramGrammarAction($1); }
-	;
+program: fromblock retrieveblock toblock authblock											{ $$ = ProgramGrammarAction($1); }
+		;
 
-fromblock : FROM OPEN_CURLY_BRACKET innerfromblock CLOSE_CURLY_BRACKET
+fromblock: FROM OPEN_CURLY_BRACKET innerfromblock CLOSE_CURLY_BRACKET						{ $$ = 0; }
 
-innerfromblock: URL TYPE_URL
+innerfromblock: URL TYPE_URL																{ $$ = 0; }
 
-retrieveblock: RETRIEVE OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
+retrieveblock: RETRIEVE OPEN_CURLY_BRACKET innerretrieveblock CLOSE_CURLY_BRACKET			{ $$ = 0; }
 
-toblock: TO OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
+innerretrieveblock: TYPE_WORD ID TYPE_WORD												{ $$ = 0; }
 
-authblock: AUTH OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
+toblock: TO OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET											{ $$ = 0; }
+
+authblock: AUTH OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET										{ $$ = 0; }
 %%

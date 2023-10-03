@@ -138,6 +138,16 @@ token AuthPrefixPatternAction() {
 	return AUTH;
 }
 
+token IdPatternAction() {
+	LogDebug("[Flex] IdPrefixPatternAction: 'ID'.");
+	return ID;
+}
+
+token SemicolonPatternAction() {
+	LogDebug("[Flex] SemicolonPatternAction: ';'.");
+	return SEMICOLON;
+}
+
 // --------------- Nuestras de tipo
 
 token UrlTypePatternAction(const char *lexeme, const int length) {
@@ -147,4 +157,22 @@ token UrlTypePatternAction(const char *lexeme, const int length) {
     yylval.string = url;
 
     return TYPE_URL;
+}
+
+token WordTypePatternAction(const char *lexeme, const int length) {
+	LogDebug("WordTypePatternAction: '%s' (length = %d).", lexeme, length);
+	char *word = (char *)calloc(length + 1, sizeof(char));
+	strncpy(word, lexeme, length);
+	yylval.string = word;
+
+	return TYPE_WORD;
+}
+
+token VariableTypePatternAction(const char *lexeme, const int length) {
+	LogDebug("VariableTypePatternAction: '%s' (length = %d).", lexeme, length);
+	char *variable = (char *)calloc(length + 1, sizeof(char));
+	strncpy(variable, lexeme, length);
+	yylval.string = variable;
+
+	return TYPE_VARIABLE;
 }
