@@ -31,6 +31,9 @@
 	int tolinerec;
 	int authblock;
 	int authline;
+	int varblock;
+	int varlinerec;
+	int varline;
 
 	// -------------------------- Nuestros data types
 	char * string;
@@ -60,23 +63,18 @@
 %token <token> SEMICOLON
 %token <token> USERNAME
 %token <token> PASSWORD
+%token <token> VAR
+%token <token> EQUALS
 
 // ------------------------ Nuestros data types
 %token <string> TYPE_URL
 %token <string> TYPE_WORD
 %token <string> TYPE_VARIABLE
 
-
-%token <token> OPEN_PARENTHESIS
-%token <token> CLOSE_PARENTHESIS
-
 %token <integer> INTEGER
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program
-%type <expression> expression
-%type <factor> factor
-%type <constant> constant
 // ------------------------ Nuestros no-terminales
 %type <fromblock> fromblock
 %type <retrieveblock> retrieveblock
@@ -88,55 +86,42 @@
 %type <tolinerec> tolinerec
 %type <authblock> authblock
 %type <authline> authline
-
-// Reglas de asociatividad y precedencia (de menor a mayor).
-//%left ADD SUB
-//%left MUL DIV
+%type <varblock> varblock
+%type <varlinerec> varlinerec
+%type <varline> varline
 
 // El símbolo inicial de la gramatica.
 %start program
 
 %%
-/*
-program: expression													{ $$ = ProgramGrammarAction($1); }
+
+program: varblock fromblock retrieveblock toblock authblock												{ $$ = ProgramGrammarAction($1); }
 	;
 
-expression: expression[left] ADD expression[right]					{ $$ = AdditionExpressionGrammarAction($left, $right); }
-	| expression[left] SUB expression[right]						{ $$ = SubtractionExpressionGrammarAction($left, $right); }
-	| expression[left] MUL expression[right]						{ $$ = MultiplicationExpressionGrammarAction($left, $right); }
-	| expression[left] DIV expression[right]						{ $$ = DivisionExpressionGrammarAction($left, $right); }
-	| factor														{ $$ = FactorExpressionGrammarAction($1); }
-	;
+varblock: varlinerec																					{ $$ = 0; }
+	| %empty
+varlinerec: varline varlinerec																			{ $$ = 0; }
+	| %empty																								
+varline: VAR TYPE_WORD EQUALS TYPE_WORD SEMICOLON														{ $$ = 0; }
 
-factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				{ $$ = ExpressionFactorGrammarAction($2); }
-	| constant														{ $$ = ConstantFactorGrammarAction($1); }
-	;
+fromblock: FROM OPEN_CURLY_BRACKET fromline CLOSE_CURLY_BRACKET											{ $$ = 0; }
 
-constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
-	; */
+fromline: URL TYPE_URL SEMICOLON																		{ $$ = 0; }
 
-program: fromblock retrieveblock toblock authblock											{ $$ = ProgramGrammarAction($1); }
-		;
+retrieveblock: RETRIEVE OPEN_CURLY_BRACKET retrieveline retrievelinerec CLOSE_CURLY_BRACKET				{ $$ = 0; }
 
-fromblock: FROM OPEN_CURLY_BRACKET fromline CLOSE_CURLY_BRACKET								{ $$ = 0; }
+retrievelinerec: retrieveline retrievelinerec															{ $$ = 0; }
+	| %empty																								
+retrieveline: TYPE_WORD ID TYPE_WORD SEMICOLON															{ $$ = 0; }
 
-fromline: URL TYPE_URL SEMICOLON															{ $$ = 0; }
+toblock: TO OPEN_CURLY_BRACKET toline tolinerec CLOSE_CURLY_BRACKET										{ $$ = 0; }
 
-retrieveblock: RETRIEVE OPEN_CURLY_BRACKET retrievelinerec CLOSE_CURLY_BRACKET				{ $$ = 0; }
+tolinerec: toline tolinerec																				{ $$ = 0; }
+	| %empty
+toline: TYPE_WORD SEMICOLON																				{ $$ = 0; }
 
-retrievelinerec: retrieveline retrievelinerec												{ $$ = 0; }
-	| 
-retrieveline: TYPE_WORD ID TYPE_WORD SEMICOLON												{ $$ = 0; }
-
-toblock: TO OPEN_CURLY_BRACKET tolinerec CLOSE_CURLY_BRACKET								{ $$ = 0; }
-
-tolinerec: toline tolinerec																	{ $$ = 0; }
-	|
-toline: TYPE_WORD SEMICOLON																	{ $$ = 0; }
-
-authblock: AUTH OPEN_CURLY_BRACKET authline CLOSE_CURLY_BRACKET								{ $$ = 0; }
-	|
-
-authline: USERNAME TYPE_WORD SEMICOLON PASSWORD TYPE_WORD SEMICOLON						    { $$ = 0; }
+authblock: AUTH OPEN_CURLY_BRACKET authline CLOSE_CURLY_BRACKET											{ $$ = 0; }
+	| %empty																						
+authline: USERNAME TYPE_WORD SEMICOLON PASSWORD TYPE_WORD SEMICOLON						    			{ $$ = 0; }
 
 %%

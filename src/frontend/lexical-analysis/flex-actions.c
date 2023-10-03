@@ -35,24 +35,12 @@ void EndCommentPatternAction() {
 	LogDebug("[Flex] [COMMENT] EndCommentPatternAction..............................");
 }
 
-token CloseParenthesisPatternAction() {
-	LogDebug("[Flex] CloseParenthesisPatternAction: ')'.");
-	yylval.token = CLOSE_PARENTHESIS;
-	return CLOSE_PARENTHESIS;
-}
-
 token IntegerPatternAction(const char * lexeme, const int length) {
 	LogDebug("[Flex] IntegerPatternAction: '%s' (length = %d).", lexeme, length);
 	char * lexemeCopy = copyLexeme(lexeme, length);
 	yylval.integer = atoi(lexemeCopy);
 	free(lexemeCopy);
 	return INTEGER;
-}
-
-token OpenParenthesisPatternAction() {
-	LogDebug("[Flex] OpenParenthesisPatternAction: '('.");
-	yylval.token = OPEN_PARENTHESIS;
-	return OPEN_PARENTHESIS;
 }
 
 token UnknownPatternAction(const char * lexeme, const int length) {
@@ -132,6 +120,16 @@ token UsernamePatternAction() {
 token PasswordPatternAction() {
 	LogDebug("[Flex] PasswordPatternAction: 'PASSWORD'.");
 	return PASSWORD;
+}
+
+token VarPatternAction() {
+	LogDebug("[Flex] VarPatternAction: 'VAR'.");
+	return VAR;
+}
+
+token EqualsPatternAction() {
+	LogDebug("[Flex] EqualPatternAction: '='.");
+	return EQUALS;
 }
 
 // --------------- Nuestras de tipo
