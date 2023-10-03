@@ -35,22 +35,10 @@ void EndCommentPatternAction() {
 	LogDebug("[Flex] [COMMENT] EndCommentPatternAction..............................");
 }
 
-token AdditionOperatorPatternAction() {
-	LogDebug("[Flex] AdditionOperatorPatternAction: '+'.");
-	yylval.token = ADD;
-	return ADD;
-}
-
 token CloseParenthesisPatternAction() {
 	LogDebug("[Flex] CloseParenthesisPatternAction: ')'.");
 	yylval.token = CLOSE_PARENTHESIS;
 	return CLOSE_PARENTHESIS;
-}
-
-token DivisionOperatorPatternAction() {
-	LogDebug("[Flex] DivisionOperatorPatternAction: '/'.");
-	yylval.token = DIV;
-	return DIV;
 }
 
 token IntegerPatternAction(const char * lexeme, const int length) {
@@ -61,22 +49,10 @@ token IntegerPatternAction(const char * lexeme, const int length) {
 	return INTEGER;
 }
 
-token MultiplicationOperatorPatternAction() {
-	LogDebug("[Flex] MultiplicationOperatorPatternAction: '*'.");
-	yylval.token = MUL;
-	return MUL;
-}
-
 token OpenParenthesisPatternAction() {
 	LogDebug("[Flex] OpenParenthesisPatternAction: '('.");
 	yylval.token = OPEN_PARENTHESIS;
 	return OPEN_PARENTHESIS;
-}
-
-token SubtractionOperatorPatternAction() {
-	LogDebug("[Flex] SubtractionOperatorPatternAction: '-'.");
-	yylval.token = SUB;
-	return SUB;
 }
 
 token UnknownPatternAction(const char * lexeme, const int length) {
@@ -146,6 +122,16 @@ token IdPatternAction() {
 token SemicolonPatternAction() {
 	LogDebug("[Flex] SemicolonPatternAction: ';'.");
 	return SEMICOLON;
+}
+
+token UsernamePatternAction() {
+	LogDebug("[Flex] UsernamePatternAction: 'USERNAME'.");
+	return USERNAME;
+}
+
+token PasswordPatternAction() {
+	LogDebug("[Flex] PasswordPatternAction: 'PASSWORD'.");
+	return PASSWORD;
 }
 
 // --------------- Nuestras de tipo

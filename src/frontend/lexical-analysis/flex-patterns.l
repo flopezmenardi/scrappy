@@ -21,7 +21,7 @@ digit			[0-9]
 endline			[\n]
 whitespace		[ \f\n\r\t\v]
 url             https?:\/\/([a-zA-Z0-9$\-_.+!*'(),%;:@&=]+(?:\/[a-zA-Z0-9$\-_.+!*'(),%;:@&=]*)*(?:\?[a-zA-Z0-9$\-_.+!*'(),%;:@&=\/]*)?(?:#[a-zA-Z0-9$\-_.+!*'(),%;:@&=\/]*)?)
-word            [a-zA-Z0-9$\-_.+!*',%;:@&=]+
+word            [a-zA-Z0-9$\-_.+!*',%;:@&=/]+
 /* password        ^.*$ */
 variable        [a-zA-Z0-9_]+
 
@@ -32,11 +32,6 @@ variable        [a-zA-Z0-9_]+
 <COMMENT>{endline}+							{ IgnoredPatternAction(yytext, yyleng); }
 <COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
 
-"+"											{ return AdditionOperatorPatternAction(yytext); }
-"-"											{ return SubtractionOperatorPatternAction(yytext); }
-"*"											{ return MultiplicationOperatorPatternAction(yytext); }
-"/"											{ return DivisionOperatorPatternAction(yytext); }
-
 "FROM"                                      { return FromPrefixPatternAction(yytext, yyleng);}
 "{"											{ return OpenCurlyBracketPatternAction(yytext); }
 "}"											{ return CloseCurlyBracketPatternAction(yytext); }
@@ -44,8 +39,9 @@ variable        [a-zA-Z0-9_]+
 "URL"   									{ return URLPatternAction(yytext, yyleng); }
 "TO"   									    { return ToPrefixPatternAction(yytext, yyleng); }
 "AUTH"   									{ return AuthPrefixPatternAction(yytext, yyleng); }
-{url}                                       { return UrlTypePatternAction(yytext, yyleng); }
 "ID"                                        { return IdPatternAction(yytext, yyleng); }
+"USERNAME"                                  { return UsernamePatternAction(yytext, yyleng); }
+"PASSWORD"                                  { return PasswordPatternAction(yytext, yyleng); }
 
 "("											{ return OpenParenthesisPatternAction(yytext); }
 ")"											{ return CloseParenthesisPatternAction(yytext); }
@@ -55,6 +51,7 @@ variable        [a-zA-Z0-9_]+
 
 {whitespace}+								{ IgnoredPatternAction(yytext, yyleng); }
 
+{url}                                       { return UrlTypePatternAction(yytext, yyleng); }
 {word}                                      { return WordTypePatternAction(yytext, yyleng); }
 {variable}                                  { return VariableTypePatternAction(yytext, yyleng); }
 

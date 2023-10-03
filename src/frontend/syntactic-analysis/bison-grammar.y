@@ -23,11 +23,14 @@
 	// -------------------------- Nuestros no terminales
 	int fromblock;
 	int retrieveblock;
-	int innerfromblock;
+	int fromline;
 	int retrieveline;
 	int retrievelinerec;
 	int toblock;
+	int toline;
+	int tolinerec;
 	int authblock;
+	int authline;
 
 	// -------------------------- Nuestros data types
 	char * string;
@@ -55,6 +58,8 @@
 %token <token> AUTH
 %token <token> ID
 %token <token> SEMICOLON
+%token <token> USERNAME
+%token <token> PASSWORD
 
 // ------------------------ Nuestros data types
 %token <string> TYPE_URL
@@ -75,11 +80,14 @@
 // ------------------------ Nuestros no-terminales
 %type <fromblock> fromblock
 %type <retrieveblock> retrieveblock
-%type <innerfromblock> innerfromblock
+%type <fromline> fromline
 %type <retrieveline> retrieveline
 %type <retrievelinerec> retrievelinerec
 %type <toblock> toblock
+%type <toline> toline
+%type <tolinerec> tolinerec
 %type <authblock> authblock
+%type <authline> authline
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 //%left ADD SUB
@@ -110,9 +118,9 @@ constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
 program: fromblock retrieveblock toblock authblock											{ $$ = ProgramGrammarAction($1); }
 		;
 
-fromblock: FROM OPEN_CURLY_BRACKET innerfromblock CLOSE_CURLY_BRACKET						{ $$ = 0; }
+fromblock: FROM OPEN_CURLY_BRACKET fromline CLOSE_CURLY_BRACKET								{ $$ = 0; }
 
-innerfromblock: URL TYPE_URL SEMICOLON														{ $$ = 0; }
+fromline: URL TYPE_URL SEMICOLON															{ $$ = 0; }
 
 retrieveblock: RETRIEVE OPEN_CURLY_BRACKET retrievelinerec CLOSE_CURLY_BRACKET				{ $$ = 0; }
 
@@ -120,7 +128,14 @@ retrievelinerec: retrieveline retrievelinerec												{ $$ = 0; }
 	| 
 retrieveline: TYPE_WORD ID TYPE_WORD SEMICOLON												{ $$ = 0; }
 
-toblock: TO OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET											{ $$ = 0; }
+toblock: TO OPEN_CURLY_BRACKET tolinerec CLOSE_CURLY_BRACKET								{ $$ = 0; }
 
-authblock: AUTH OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET										{ $$ = 0; }
+tolinerec: toline tolinerec																	{ $$ = 0; }
+	|
+toline: TYPE_WORD SEMICOLON																	{ $$ = 0; }
+
+authblock: AUTH OPEN_CURLY_BRACKET authline CLOSE_CURLY_BRACKET								{ $$ = 0; }
+
+authline: USERNAME TYPE_WORD SEMICOLON PASSWORD TYPE_WORD SEMICOLON						    { $$ = 0; }
+
 %%
