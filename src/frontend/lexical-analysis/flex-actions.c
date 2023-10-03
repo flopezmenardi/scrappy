@@ -1,7 +1,9 @@
 #include "../../backend/support/logger.h"
 #include "flex-actions.h"
+// #include "../../utils/wrapper-functions.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 /**
  * Implementación de "flex-actions.h".
@@ -134,4 +136,15 @@ token ToPrefixPatternAction() {
 token AuthPrefixPatternAction() {
 	LogDebug("[Flex] AuthPrefixPatternAction: 'AUTH'.");
 	return AUTH;
+}
+
+// --------------- Nuestras de tipo
+
+token UrlTypePatternAction(const char *lexeme, const int length) {
+    LogDebug("UrlTypePatternAction: '%s' (length = %d).", lexeme, length);
+    char *url = (char *)calloc(length + 1, sizeof(char));
+    strncpy(url, lexeme, length);
+    yylval.string = url;
+
+    return TYPE_URL;
 }

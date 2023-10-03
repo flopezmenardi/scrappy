@@ -39,6 +39,9 @@ token RetrievePrefixPatternAction();
 token URLPatternAction();
 token ToPrefixPatternAction();
 token AuthPrefixPatternAction();
+// --------------- Nuestras de tipo
+token UrlTypePatternAction(const char* lexeme, const int length);
+
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);

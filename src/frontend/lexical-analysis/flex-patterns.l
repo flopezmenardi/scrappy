@@ -20,6 +20,7 @@
 digit			[0-9]
 endline			[\n]
 whitespace		[ \f\n\r\t\v]
+url             https?:\/\/([a-zA-Z0-9$\-_.+!*'(),%;:@&=]+(?:\/[a-zA-Z0-9$\-_.+!*'(),%;:@&=]*)*(?:\?[a-zA-Z0-9$\-_.+!*'(),%;:@&=\/]*)?(?:#[a-zA-Z0-9$\-_.+!*'(),%;:@&=\/]*)?)
 
 %%
 
@@ -40,6 +41,7 @@ whitespace		[ \f\n\r\t\v]
 "URL"   									{ return URLPatternAction(yytext, yyleng); }
 "TO"   									    { return ToPrefixPatternAction(yytext, yyleng); }
 "AUTH"   									{ return AuthPrefixPatternAction(yytext, yyleng); }
+{url}                                       { return UrlTypePatternAction(yytext, yyleng); }
 
 "("											{ return OpenParenthesisPatternAction(yytext); }
 ")"											{ return CloseParenthesisPatternAction(yytext); }

@@ -27,6 +27,9 @@
 	int toblock;
 	int authblock;
 
+	// -------------------------- Nuestros data types
+	char * string;
+
 	// Terminales.
 	token token;
 	int integer;
@@ -48,6 +51,9 @@
 %token <token> URL
 %token <token> TO
 %token <token> AUTH
+
+// ------------------------ Nuestros data types
+%token <string> TYPE_URL
 
 
 %token <token> OPEN_PARENTHESIS
@@ -98,7 +104,7 @@ program: fromblock retrieveblock toblock authblock									{ $$ = ProgramGrammar
 
 fromblock : FROM OPEN_CURLY_BRACKET innerfromblock CLOSE_CURLY_BRACKET
 
-innerfromblock: URL
+innerfromblock: URL TYPE_URL
 
 retrieveblock: RETRIEVE OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
 
