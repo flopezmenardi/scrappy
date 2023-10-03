@@ -37,6 +37,8 @@ token OpenCurlyBracketPatternAction();
 token CloseCurlyBracketPatternAction();
 token RetrievePrefixPatternAction();
 token URLPatternAction();
+token ToPrefixPatternAction();
+token AuthPrefixPatternAction();
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);

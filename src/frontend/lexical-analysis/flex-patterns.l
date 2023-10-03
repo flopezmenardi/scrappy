@@ -38,6 +38,8 @@ whitespace		[ \f\n\r\t\v]
 "}"											{ return CloseCurlyBracketPatternAction(yytext); }
 "RETRIEVE"									{ return RetrievePrefixPatternAction(yytext, yyleng); }
 "URL"   									{ return URLPatternAction(yytext, yyleng); }
+"TO"   									    { return ToPrefixPatternAction(yytext, yyleng); }
+"AUTH"   									{ return AuthPrefixPatternAction(yytext, yyleng); }
 
 "("											{ return OpenParenthesisPatternAction(yytext); }
 ")"											{ return CloseParenthesisPatternAction(yytext); }

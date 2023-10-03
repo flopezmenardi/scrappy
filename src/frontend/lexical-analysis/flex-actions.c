@@ -125,3 +125,13 @@ token URLPatternAction() {
 	LogDebug("[Flex] URLPatternAction: 'URL'.");
 	return URL;
 }
+
+token ToPrefixPatternAction() {
+	LogDebug("[Flex] ToPrefixPatternAction: 'TO'.");
+	return TO;
+}
+
+token AuthPrefixPatternAction() {
+	LogDebug("[Flex] AuthPrefixPatternAction: 'AUTH'.");
+	return AUTH;
+}

@@ -24,6 +24,8 @@
 	int fromblock;
 	int retrieveblock;
 	int innerfromblock;
+	int toblock;
+	int authblock;
 
 	// Terminales.
 	token token;
@@ -44,7 +46,8 @@
 %token <token> CLOSE_CURLY_BRACKET
 %token <token> RETRIEVE
 %token <token> URL
-
+%token <token> TO
+%token <token> AUTH
 
 
 %token <token> OPEN_PARENTHESIS
@@ -61,6 +64,8 @@
 %type <fromblock> fromblock
 %type <retrieveblock> retrieveblock
 %type <innerfromblock> innerfromblock
+%type <toblock> toblock
+%type <authblock> authblock
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -88,7 +93,7 @@ factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				{ $$ = ExpressionFactor
 constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
 	; */
 
-program: fromblock retrieveblock									{ $$ = ProgramGrammarAction($1); }
+program: fromblock retrieveblock toblock authblock									{ $$ = ProgramGrammarAction($1); }
 	;
 
 fromblock : FROM OPEN_CURLY_BRACKET innerfromblock CLOSE_CURLY_BRACKET
@@ -96,4 +101,8 @@ fromblock : FROM OPEN_CURLY_BRACKET innerfromblock CLOSE_CURLY_BRACKET
 innerfromblock: URL
 
 retrieveblock: RETRIEVE OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
+
+toblock: TO OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
+
+authblock: AUTH OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
 %%
