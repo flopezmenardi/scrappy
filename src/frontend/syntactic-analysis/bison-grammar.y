@@ -20,6 +20,8 @@
 	int expression;
 	int factor;
 	int constant;
+	// -------------------------- Nuestros no terminales
+	int fromblock;
 
 	// Terminales.
 	token token;
@@ -34,6 +36,12 @@
 %token <token> SUB
 %token <token> MUL
 %token <token> DIV
+// ------------------------ Nuestros terminales
+%token <token> FROM
+%token <token> OPEN_CURLY_BRACKET
+%token <token> CLOSE_CURLY_BRACKET
+
+
 
 %token <token> OPEN_PARENTHESIS
 %token <token> CLOSE_PARENTHESIS
@@ -45,6 +53,8 @@
 %type <expression> expression
 %type <factor> factor
 %type <constant> constant
+// ------------------------ Nuestros no-terminales
+%type <fromblock> fromblock
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -54,7 +64,7 @@
 %start program
 
 %%
-
+/*
 program: expression													{ $$ = ProgramGrammarAction($1); }
 	;
 
@@ -70,6 +80,10 @@ factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				{ $$ = ExpressionFactor
 	;
 
 constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
+	; */
+
+program: fromblock													{ $$ = ProgramGrammarAction($1); }
 	;
 
+fromblock : FROM OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET
 %%

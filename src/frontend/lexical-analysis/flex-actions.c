@@ -95,3 +95,23 @@ void IgnoredPatternAction(const char * lexeme, const int length) {
 	// Como no debe hacer nada con el patrón, solo se loguea en consola.
 	// No se emite ningún token.
 }
+
+
+// -------------------------------------------------------------------------
+// -------------------------------------------------------------------------
+
+
+token FromPrefixPatternAction() {
+	LogDebug("[Flex] FromPrefixPatternAction: 'FROM'.");
+	return FROM;
+}
+
+token OpenCurlyBracketPatternAction() {
+	LogDebug("[Flex] OpenCurlyBracketPatternAction: '{'.");
+	return OPEN_CURLY_BRACKET;
+}
+
+token CloseCurlyBracketPatternAction() {
+	LogDebug("[Flex] CloseCurlyBracketPatternAction: '}'.");
+	return CLOSE_CURLY_BRACKET;
+}

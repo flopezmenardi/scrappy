@@ -88,3 +88,7 @@ int IntegerConstantGrammarAction(const int value) {
 	LogDebug("[Bison] IntegerConstantGrammarAction(%d)", value);
 	return value;
 }
+
+
+// ----------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------
