@@ -24,7 +24,8 @@
 	int fromblock;
 	int retrieveblock;
 	int innerfromblock;
-	int innerretrieveblock;
+	int retrieveline;
+	int retrievelinerec;
 	int toblock;
 	int authblock;
 
@@ -75,7 +76,8 @@
 %type <fromblock> fromblock
 %type <retrieveblock> retrieveblock
 %type <innerfromblock> innerfromblock
-%type <innerretrieveblock> innerretrieveblock
+%type <retrieveline> retrieveline
+%type <retrievelinerec> retrievelinerec
 %type <toblock> toblock
 %type <authblock> authblock
 
@@ -110,11 +112,13 @@ program: fromblock retrieveblock toblock authblock											{ $$ = ProgramGramm
 
 fromblock: FROM OPEN_CURLY_BRACKET innerfromblock CLOSE_CURLY_BRACKET						{ $$ = 0; }
 
-innerfromblock: URL TYPE_URL																{ $$ = 0; }
+innerfromblock: URL TYPE_URL SEMICOLON														{ $$ = 0; }
 
-retrieveblock: RETRIEVE OPEN_CURLY_BRACKET innerretrieveblock CLOSE_CURLY_BRACKET			{ $$ = 0; }
+retrieveblock: RETRIEVE OPEN_CURLY_BRACKET retrievelinerec CLOSE_CURLY_BRACKET				{ $$ = 0; }
 
-innerretrieveblock: TYPE_WORD ID TYPE_WORD												{ $$ = 0; }
+retrievelinerec: retrieveline retrievelinerec												{ $$ = 0; }
+	| 
+retrieveline: TYPE_WORD ID TYPE_WORD SEMICOLON												{ $$ = 0; }
 
 toblock: TO OPEN_CURLY_BRACKET CLOSE_CURLY_BRACKET											{ $$ = 0; }
 
