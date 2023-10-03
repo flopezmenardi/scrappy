@@ -135,6 +135,7 @@ tolinerec: toline tolinerec																	{ $$ = 0; }
 toline: TYPE_WORD SEMICOLON																	{ $$ = 0; }
 
 authblock: AUTH OPEN_CURLY_BRACKET authline CLOSE_CURLY_BRACKET								{ $$ = 0; }
+	|
 
 authline: USERNAME TYPE_WORD SEMICOLON PASSWORD TYPE_WORD SEMICOLON						    { $$ = 0; }
 
