@@ -1,0 +1,11 @@
+VAR root = myname ;
+FROM { 
+    URL https://www.google.com/ ; 
+}
+RETRIEVE { 
+    img ID * ;
+}
+TO { 
+    $root/user/downloads ;
+}
+

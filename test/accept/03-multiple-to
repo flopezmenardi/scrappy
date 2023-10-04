@@ -1,0 +1,10 @@
+FROM { 
+    URL https://www.google.com/ ; 
+}
+RETRIEVE { 
+    img ID * ;
+}
+TO { 
+    myname/user/images ;
+    myname/user/downloads ;
+}

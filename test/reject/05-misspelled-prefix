@@ -1,0 +1,9 @@
+FROM { 
+    URL https://www.google.com/ ; 
+}
+RETRI { 
+    img ID * ;
+}
+TO { 
+    myname/user/heist ;
+}

@@ -1,0 +1,16 @@
+FROM { 
+    URL https://www.wikipedia.com/ ; 
+}
+RETRIEVE { 
+    img ID * ;
+}
+TO { 
+    myname/user/heist ;
+}
+
+AUTH { 
+    USERNAME conde ;
+    PASSWORD venganza ;
+}
+
+

@@ -1,0 +1,11 @@
+FROM { 
+    URL https://www.google.com/ ; 
+}
+RETRIEVE { 
+    img ID * ;
+    a ID mainLink ;
+    p ID body ;
+}
+TO { 
+    myname/user/heist ;
+}

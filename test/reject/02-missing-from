@@ -1,0 +1,6 @@
+RETRIEVE { 
+    img ID * ;
+}
+TO { 
+    myname/user/heist ;
+}
