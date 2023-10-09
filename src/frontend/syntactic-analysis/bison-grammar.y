@@ -113,6 +113,7 @@ retrieveblock: RETRIEVE OPEN_CURLY_BRACKET retrieveline retrievelinerec CLOSE_CU
 retrievelinerec: retrieveline retrievelinerec															{ $$ = 0; }
 	| %empty																								
 retrieveline: TYPE_WORD ID TYPE_WORD SEMICOLON															{ $$ = 0; }
+	| TYPE_WORD SEMICOLON													
 
 toblock: TO OPEN_CURLY_BRACKET toline tolinerec CLOSE_CURLY_BRACKET										{ $$ = 0; }
 

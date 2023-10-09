@@ -1,0 +1,9 @@
+FROM { 
+    URL https://www.google.com/; 
+}
+RETRIEVE { 
+    img;
+}
+TO { 
+    myname/user/heist;
+}
