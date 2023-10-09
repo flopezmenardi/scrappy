@@ -1,0 +1,10 @@
+VAR root = myname;
+FROM { 
+    URL https://en.wikipedia.org/wiki/Neon_Genesis_Evangelion; 
+}
+RETRIEVE { 
+    h1 ID *;
+}
+TO { 
+    root/user/heist;
+}

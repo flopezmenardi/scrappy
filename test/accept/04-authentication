@@ -1,16 +1,16 @@
 FROM { 
-    URL https://www.wikipedia.com/ ; 
+    URL https://www.wikipedia.com/; 
 }
 RETRIEVE { 
-    img ID * ;
+    img ID *;
 }
 TO { 
-    myname/user/heist ;
+    myname/user/heist;
 }
 
 AUTH { 
-    USERNAME conde ;
-    PASSWORD venganza ;
+    USERNAME conde;
+    PASSWORD venganza;
 }
 
 

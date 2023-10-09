@@ -1,0 +1,10 @@
+VAR root = myname;
+FROM { 
+    URL https://en.wikipedia.org/wiki/Anime; 
+}
+RETRIEVE { 
+    p ID *;
+}
+TO { 
+    root/user/heist;
+}

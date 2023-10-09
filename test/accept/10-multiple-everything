@@ -1,0 +1,22 @@
+VAR root = myname;
+VAR folder = downloads;
+FROM { 
+    URL https://www.google.com/; 
+}
+RETRIEVE { 
+    img ID *;
+    a ID mainLink;
+    p ID body;
+    p ID description;
+    p ID bio;
+}
+TO { 
+    myname/user/images;
+    myname/user/downloads;
+    myname/user/documents;
+    myname/user/tla;
+}
+AUTH {
+    USERNAME username;
+    PASSWORD myPassword;
+}

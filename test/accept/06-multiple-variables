@@ -1,13 +1,13 @@
-VAR root = myname ;
+VAR root = myname;
 VAR folder = downloads;
 FROM { 
-    URL https://www.google.com/ ; 
+    URL https://www.google.com/; 
 }
 RETRIEVE { 
-    img ID * ;
+    img ID *;
 }
 TO { 
-    $root/user/$folder ;
+    $root/user/$folder;
 }
 
 
