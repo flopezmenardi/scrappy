@@ -45,10 +45,25 @@ variable        [a-zA-Z0-9_]+
 "PASSWORD"                                  { return PasswordPatternAction(yytext, yyleng); }
 "VAR"                                       { return VarPatternAction(yytext, yyleng); }
 
-";"											{ return SemicolonPatternAction(yytext); }
-"="                                         { return EqualsPatternAction(yytext); }
+"HTML"                                      { return HtmlPatternAction(yytext, yyleng); }
+"HEAD"                                      { return HeadPatternAction(yytext, yyleng); }
+"TITLE"                                     { return TitlePatternAction(yytext, yyleng); }
+"BODY"                                      { return BodyPatternAction(yytext, yyleng); }
+"H1"                                        { return H1PatternAction(yytext, yyleng); }
+"H2"                                        { return H2PatternAction(yytext, yyleng); }
+"H3"                                        { return H3PatternAction(yytext, yyleng); }
+"H4"                                        { return H4PatternAction(yytext, yyleng); }
+"H5"                                        { return H5PatternAction(yytext, yyleng); }
+"H6"                                        { return H6PatternAction(yytext, yyleng); }
+"IMG"                                       { return ImagePatternAction(yytext, yyleng); }
+"A"                                         { return LinkPatternAction(yytext, yyleng); }
+"P"                                         { return ParagraphPatternAction(yytext, yyleng); }
+"UL"                                        { return UnorderedListPatternAction(yytext, yyleng); }
+"OL"                                        { return OrderedListPatternAction(yytext, yyleng); }
+"DL"                                        { return DefinitionListPatternAction(yytext, yyleng); }
+"LI"                                        { return ListItemPatternAction(yytext, yyleng); }
 
-{digit}+									{ return IntegerPatternAction(yytext, yyleng); }
+";"											{ return SemicolonPatternAction(yytext); }
 
 {whitespace}+								{ IgnoredPatternAction(yytext, yyleng); }
 

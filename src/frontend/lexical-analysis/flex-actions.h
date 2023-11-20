@@ -24,7 +24,6 @@ void BeginCommentPatternAction();
 void EndCommentPatternAction();
 
 // Patrones terminales del lenguaje diseñado.
-token IntegerPatternAction(const char * lexeme, const int length);
 // --------------- Nuestras definiciones
 token FromPrefixPatternAction();
 token OpenCurlyBracketPatternAction();
@@ -38,7 +37,24 @@ token SemicolonPatternAction();
 token UsernamePatternAction();
 token PasswordPatternAction();
 token VarPatternAction();
-token EqualsPatternAction();
+token HtmlPatternAction();
+token HeadPatternAction();
+token TitlePatternAction();
+token BodyPatternAction();
+token H1PatternAction();
+token H2PatternAction();
+token H3PatternAction();
+token H4PatternAction();
+token H5PatternAction();
+token H6PatternAction();
+token ImagePatternAction();
+token LinkPatternAction();
+token ParagraphPatternAction();
+token UnorderedListPatternAction();
+token OrderedListPatternAction();
+token DefinitionListPatternAction();
+token ListItemPatternAction();
+
 // --------------- Nuestras de tipo
 token UrlTypePatternAction(const char* lexeme, const int length);
 token WordTypePatternAction(const char* lexeme, const int length);

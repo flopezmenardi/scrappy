@@ -19,3 +19,4 @@ bison-parser.h
 flex-scanner.c
 program
 random.md
+.bash_history

@@ -5,6 +5,21 @@ cmake_minimum_required(VERSION 3.22)
 # Nombre del proyecto, y lenguaje utilizado (C, en este caso).
 project(Compiler C)
 
+# Custom clean target to be used with 'make clean_all'
+add_custom_target(clean_all
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/bin
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/CMakeFiles
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/CMakeCache.txt
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_SOURCE_DIR}/../src/frontend/syntactic-analysis/bison-parser.c
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_SOURCE_DIR}/../src/frontend/syntactic-analysis/bison-parser.h
+    COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_SOURCE_DIR}/../src/frontend/lexical-analysis/flex-scanner.c
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_SOURCE_DIR}/../build
+    COMMENT "Cleaning build files"
+)
+
+# Add clean_all target as a dependency for all target(s)
+add_dependencies(clean_all Compiler)
+
 # Compilar el parser con Bison, generando contra-ejemplos en caso de que se presenten conflictos.
 add_custom_command(
 	OUTPUT ../src/frontend/syntactic-analysis/bison-parser.c ../src/frontend/syntactic-analysis/bison-parser.h
@@ -61,7 +76,7 @@ endif ()
 add_executable(Compiler
 	src/main.c
 	src/backend/code-generation/generator.c
-	src/backend/domain-specific/calculator.c
+	src/backend/semantic-analysis/symbol-table.c
 	src/backend/support/logger.c
 	src/frontend/lexical-analysis/flex-actions.c
 	src/frontend/lexical-analysis/flex-scanner.c

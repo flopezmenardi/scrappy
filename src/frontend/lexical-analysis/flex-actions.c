@@ -35,14 +35,6 @@ void EndCommentPatternAction() {
 	LogDebug("[Flex] [COMMENT] EndCommentPatternAction..............................");
 }
 
-token IntegerPatternAction(const char * lexeme, const int length) {
-	LogDebug("[Flex] IntegerPatternAction: '%s' (length = %d).", lexeme, length);
-	char * lexemeCopy = copyLexeme(lexeme, length);
-	yylval.integer = atoi(lexemeCopy);
-	free(lexemeCopy);
-	return INTEGER;
-}
-
 token UnknownPatternAction(const char * lexeme, const int length) {
 	char * lexemeCopy = copyLexeme(lexeme, length);
 	LogDebug("[Flex] UnknownPatternAction: '%s' (length = %d).", lexemeCopy, length);
@@ -127,9 +119,89 @@ token VarPatternAction() {
 	return VAR;
 }
 
-token EqualsPatternAction() {
-	LogDebug("[Flex] EqualPatternAction: '='.");
-	return EQUALS;
+token HtmlPatternAction() {
+	LogDebug("[Flex] HtmlPatternAction: 'HTML'.");
+	return HTML;
+}
+
+token HeadPatternAction() {
+	LogDebug("[Flex] HeadPatternAction: 'HEAD'.");
+	return HEAD;
+}
+
+token TitlePatternAction() {
+	LogDebug("[Flex] TitlePatternAction: 'TITLE'.");
+	return TITLE;
+}
+
+token BodyPatternAction() {
+	LogDebug("[Flex] BodyPatternAction: 'BODY'.");
+	return BODY;
+}
+
+token H1PatternAction() {
+	LogDebug("[Flex] H1PatternAction: 'H1'.");
+	return H1;
+}
+
+token H2PatternAction() {
+	LogDebug("[Flex] H2PatternAction: 'H2'.");
+	return H2;
+}
+
+token H3PatternAction() {
+	LogDebug("[Flex] H3PatternAction: 'H3'.");
+	return H3;
+}
+
+token H4PatternAction() {
+	LogDebug("[Flex] H4PatternAction: 'H4'.");
+	return H4;
+}
+
+token H5PatternAction() {
+	LogDebug("[Flex] H5PatternAction: 'H5'.");
+	return H5;
+}
+
+token H6PatternAction() {
+	LogDebug("[Flex] H6PatternAction: 'H6'.");
+	return H6;
+}
+
+token ImagePatternAction() {
+	LogDebug("[Flex] ImagePatternAction: 'IMG'.");
+	return IMG;
+}
+
+token LinkPatternAction() {
+	LogDebug("[Flex] LinkPatternAction: 'A'.");
+	return A;
+}
+
+token ParagraphPatternAction() {
+	LogDebug("[Flex] ParagraphPatternAction: 'PARAGRAPH'.");
+	return P;
+}
+
+token UnorderedListPatternAction() {
+	LogDebug("[Flex] UnorderedListPatternAction: 'UNORDERED_LIST'.");
+	return UL;
+}
+
+token OrderedListPatternAction() {
+	LogDebug("[Flex] OrderedListPatternAction: 'ORDERED_LIST'.");
+	return OL;
+}
+
+token DefinitionListPatternAction() {
+	LogDebug("[Flex] DefinitionListPatternAction: 'DEFINITION_LIST'.");
+	return DL;
+}
+
+token ListItemPatternAction() {
+	LogDebug("[Flex] ListItemPatternAction: 'LIST_ITEM'.");
+	return LI;
 }
 
 // --------------- Nuestras de tipo

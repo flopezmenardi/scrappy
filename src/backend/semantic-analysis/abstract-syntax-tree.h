@@ -25,32 +25,100 @@ typedef struct {
 * De este modo, al recorrer el AST, es posible determinar qué nodos hijos
 * posee según el valor de este enumerado.
 */
+
+typedef struct VarLineNode VarLineNode;
+
+struct VarLineNode {
+	char * varName;
+	char * value;
+	VarLineNode * next;
+};
+
+typedef struct VarBlockNode VarBlockNode;
+
+struct VarBlockNode {
+	VarLineNode * varLine;
+};
+
+typedef struct FromLineNode FromLineNode;
+
+struct FromLineNode {
+	char * url;
+	FromLineNode * next;
+};
+
+typedef struct FromBlockNode FromBlockNode;
+
+struct FromBlockNode {
+	FromLineNode * fromLine;
+};
+
 typedef enum {
-	EXPRESSION,
-	CONSTANT
-} FactorType;
+	TAG_HTML,
+	TAG_HEAD,
+	TAG_TITLE,
+	TAG_BODY,
+	TAG_H1,
+	TAG_H2,
+	TAG_H3,
+	TAG_H4,
+	TAG_H5,
+	TAG_H6,
+	TAG_IMG,
+	TAG_A,
+	TAG_P,
+	TAG_UL,
+	TAG_OL,
+	TAG_DL,
+	TAG_LI
+} Tag;
 
-typedef struct {
-	FactorType type;
-	Expression * expression;
-} Factor;
+typedef struct RetrieveLineNode RetrieveLineNode;
 
-typedef enum {
-	ADDITION,
-	SUBTRACTION,
-	MULTIPLICATION,
-	DIVISION,
-	FACTOR
-} ExpressionType;
+struct RetrieveLineNode {
+	Tag * tag;
+	char * varName;
+	RetrieveLineNode * next;
+};
 
-struct Expression {
-	ExpressionType type;
-	Expression * leftExpression;
-	Expression * rightExpression;
+typedef struct RetrieveBlockNode RetrieveBlockNode;
+
+struct RetrieveBlockNode {
+	RetrieveLineNode * retrieveLine;
+};
+
+typedef struct ToLineNode ToLineNode;
+
+struct ToLineNode {
+	char * path;
+	ToLineNode * next;
+};
+
+typedef struct ToBlockNode ToBlockNode;
+
+struct ToBlockNode {
+	ToLineNode * toLine;
+};
+
+typedef struct AuthLineNode AuthLineNode;
+
+struct AuthLineNode {
+	char * username;
+	char * password;
+};
+
+typedef struct AuthBlockNode AuthBlockNode;
+
+struct AuthBlockNode {
+	AuthLineNode * authLine;
 };
 
 typedef struct {
-	Expression * expression;
+	VarBlockNode * varBlock;
+	FromBlockNode * fromBlock;
+	RetrieveBlockNode * retrieveBlock;
+	ToBlockNode * toBlock;
+	AuthBlockNode * authBlock;
 } Program;
 
 #endif
