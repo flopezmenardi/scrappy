@@ -204,6 +204,11 @@ token ListItemPatternAction() {
 	return LI;
 }
 
+token DivPatternAction() {
+	LogDebug("[Flex] DivPatternAction: 'DIV'.");
+	return DIV;
+}
+
 // --------------- Nuestras de tipo
 
 token UrlTypePatternAction(const char *lexeme, const int length) {

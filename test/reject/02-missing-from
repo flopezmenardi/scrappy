@@ -1,6 +1,6 @@
-RETRIEVE { 
-    img ID * ;
+retrieve { 
+    img;
 }
-TO { 
+to { 
     myname/user/heist ;
 }

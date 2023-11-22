@@ -1,4 +1,4 @@
-VAR root = myname;
+var root myname;
 FROM { 
     URL https://www.google.com/; 
 }

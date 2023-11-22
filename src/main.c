@@ -32,7 +32,9 @@ const int main(const int argumentCount, const char ** arguments) {
 			if (state.succeed) {
 				LogInfo("La compilacion fue exitosa.");
 				LogInfo("Programa valido? '%d'.", state.succeed);
-				// Generator(state.result);
+				interpolate();
+				LogInfo("Interpolando...");
+				Generator(state.result, symbolTable);
 			}
 			else {
 				LogError("Se produjo un error en la aplicacion.");
@@ -51,6 +53,8 @@ const int main(const int argumentCount, const char ** arguments) {
 	LogInfo("Fin.");
 
 	printSymbolTable();
+
+	freeSymbolTable();
 
 	return result;
 }

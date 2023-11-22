@@ -70,7 +70,8 @@ typedef enum {
 	TAG_UL,
 	TAG_OL,
 	TAG_DL,
-	TAG_LI
+	TAG_LI,
+	TAG_DIV
 } Tag;
 
 typedef struct RetrieveLineNode RetrieveLineNode;

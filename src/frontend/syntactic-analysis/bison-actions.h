@@ -16,13 +16,10 @@
 Program * ProgramGrammarAction(VarBlockNode * varBlock, FromBlockNode * fromBlock, RetrieveBlockNode * retrieveBlock, ToBlockNode * toBlock, AuthBlockNode * authBlock);
 
 VarBlockNode * VarBlockNodeGrammarAction(VarLineNode * varLine);
-VarLineNode * AppendVarLineNodeRec(VarLineNode * varLine, VarLineNode * varLineToAppend);
 VarLineNode * VarLineNodeGrammarAction(char * varName, char * value);
 FromBlockNode * FromBlockNodeGrammarAction(FromLineNode * fromLine);
 FromLineNode * FromLineNodeGrammarAction(char * url);
-FromLineNode * AppendFromLineNodeRec(FromLineNode * fromLine, FromLineNode * fromLineToAppend);
 RetrieveBlockNode * RetrieveBlockNodeGrammarAction(RetrieveLineNode * retrieveLine);
-RetrieveLineNode * AppendRetrieveLineNodeRec(RetrieveLineNode * retrieveLine, RetrieveLineNode * retrieveLineToAppend);
 RetrieveLineNode * RetrieveLineNodeGrammarAction(Tag * tag, char * varName);
 Tag * TagHtmlGrammarAction();
 Tag * TagHeadGrammarAction();
@@ -41,8 +38,8 @@ Tag * TagUnorderedListGrammarAction();
 Tag * TagOrderedListGrammarAction();
 Tag * TagDefinitionListGrammarAction();
 Tag * TagListItemGrammarAction();
+Tag * TagDivGrammarAction();
 ToBlockNode * ToBlockNodeGrammarAction(ToLineNode * toLine);
-ToLineNode * AppendToLineNodeRec(ToLineNode * toLine, ToLineNode * toLineToAppend);
 ToLineNode * ToLineNodeGrammarAction(char * path);
 AuthBlockNode * AuthBlockNodeGrammarAction(AuthLineNode * authLine);
 AuthLineNode * AuthLineNodeGrammarAction(char * username, char * password);

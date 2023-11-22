@@ -1,9 +1,9 @@
-TO { 
+to { 
     myname/user/heist ;
 }
-RETRIEVE { 
-    img ID * ;
+retrieve { 
+    img ;
 }
-FROM { 
-    URL https://www.google.com/ ; 
+from { 
+    url https://www.google.com/ ; 
 }

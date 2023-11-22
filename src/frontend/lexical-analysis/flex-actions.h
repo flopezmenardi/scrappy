@@ -54,6 +54,7 @@ token UnorderedListPatternAction();
 token OrderedListPatternAction();
 token DefinitionListPatternAction();
 token ListItemPatternAction();
+token DivPatternAction();
 
 // --------------- Nuestras de tipo
 token UrlTypePatternAction(const char* lexeme, const int length);

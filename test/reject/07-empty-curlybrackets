@@ -1,3 +1,3 @@
-FROM { }
-RETRIEVE { }
-TO { }
+from { }
+retrieve { }
+to { }

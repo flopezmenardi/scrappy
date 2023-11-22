@@ -1,9 +1,9 @@
-FROM { 
+from { 
     URL https://www.google.com/ ; 
 }
-RETRI { 
-    img ID * ;
+retri { 
+    img   ;
 }
-TO { 
+to { 
     myname/user/heist ;
 }

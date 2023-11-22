@@ -1,6 +1,6 @@
-FROM { 
-    URL https://www.google.com/ ; 
+from { 
+    url https://www.google.com/ ; 
 }
-RETRIEVE { 
-    img ID * ;
+retrieve { 
+    img  ;
 }

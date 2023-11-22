@@ -1,22 +1,22 @@
-VAR root = myname;
-VAR folder = downloads;
-FROM { 
-    URL https://www.google.com/; 
+var root  myname;
+var folder downloads;
+from { 
+    url https://www.google.com/; 
 }
-RETRIEVE { 
-    img ID *;
-    a ID mainLink;
-    p ID body;
-    p ID description;
-    p ID bio;
+retrieve { 
+    img;
+    a id mainLink;
+    p id body;
+    p id description;
+    p id bio;
 }
-TO { 
+to { 
     myname/user/images;
     myname/user/downloads;
     myname/user/documents;
     myname/user/tla;
 }
-AUTH {
-    USERNAME username;
-    PASSWORD myPassword;
+auth {
+    username username;
+    password myPassword;
 }

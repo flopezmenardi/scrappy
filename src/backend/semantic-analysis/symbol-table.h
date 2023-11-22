@@ -55,6 +55,8 @@ extern list * errorList;
 
 symbol_table * initSymbolTable();
 
+void interpolate();
+
 void freeSymbolTable();
 
 symbol_table * getSymbolTable();

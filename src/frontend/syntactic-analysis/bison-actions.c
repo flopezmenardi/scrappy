@@ -64,14 +64,6 @@ VarBlockNode * VarBlockNodeGrammarAction(VarLineNode * varLine){
 	return varBlock;
 }
 
-VarLineNode * AppendVarLineNodeRec(VarLineNode * varLine, VarLineNode * varLineToAppend){
-	if(varLine == NULL){
-		return varLineToAppend;
-	}
-	varLine->next = AppendVarLineNodeRec(varLine->next, varLineToAppend);
-	return varLine;
-}
-
 VarLineNode * VarLineNodeGrammarAction(char * varName, char * value){
 	LogDebug("[Bison] VarLineGrammarAction");
 	VarLineNode * varLine = (VarLineNode *) calloc(1, sizeof(VarLineNode));
@@ -100,14 +92,6 @@ FromLineNode * FromLineNodeGrammarAction(char * url){
 	return fromLine;
 }
 
-FromLineNode * AppendFromLineNodeRec(FromLineNode * fromLine, FromLineNode * fromLineToAppend){
-	if(fromLine == NULL){
-		return fromLineToAppend;
-	}
-	fromLine->next = AppendFromLineNodeRec(fromLine->next, fromLineToAppend);
-	return fromLine;
-}
-
 RetrieveBlockNode * RetrieveBlockNodeGrammarAction(RetrieveLineNode * retrieveLine){
 	LogDebug("[Bison] RetrieveBlockGrammarAction");
 	RetrieveBlockNode * retrieveBlock = (RetrieveBlockNode *) calloc(1, sizeof(RetrieveBlockNode));
@@ -115,19 +99,14 @@ RetrieveBlockNode * RetrieveBlockNodeGrammarAction(RetrieveLineNode * retrieveLi
 	return retrieveBlock;
 }
 
-RetrieveLineNode * AppendRetrieveLineNodeRec(RetrieveLineNode * retrieveLine, RetrieveLineNode * retrieveLineToAppend){
-	if(retrieveLine == NULL){
-		return retrieveLineToAppend;
-	}
-	retrieveLine->next = AppendRetrieveLineNodeRec(retrieveLine->next, retrieveLineToAppend);
-	return retrieveLine;
-}
-
 RetrieveLineNode * RetrieveLineNodeGrammarAction(Tag * tag, char * varName){
 	LogDebug("[Bison] RetrieveLineGrammarAction");
 	RetrieveLineNode * retrieveLine = (RetrieveLineNode *) calloc(1, sizeof(RetrieveLineNode));
 	retrieveLine-> tag = tag;
-	retrieveLine->varName = varName;
+	if(varName == "")
+		retrieveLine->varName = NULL;
+	else
+		retrieveLine->varName = varName;
 
 	addToTagList(getTagString(tag), varName);
 
@@ -253,19 +232,18 @@ Tag * TagListItemGrammarAction(){
 	return tag;
 }
 
+Tag * TagDivGrammarAction(){
+	LogDebug("[Bison] TagDivGrammarAction");
+	Tag * tag = (Tag *) calloc(1, sizeof(Tag));
+	*tag = TAG_DIV;
+	return tag;
+}
+
 ToBlockNode * ToBlockNodeGrammarAction(ToLineNode * toLine){
 	LogDebug("[Bison] ToBlockGrammarAction");
 	ToBlockNode * toBlock = (ToBlockNode *) calloc(1, sizeof(ToBlockNode));
 	toBlock->toLine = toLine;
 	return toBlock;
-}
-
-ToLineNode * AppendToLineNodeRec(ToLineNode * toLine, ToLineNode * toLineToAppend){
-	if(toLine == NULL){
-		return toLineToAppend;
-	}
-	toLine->next = AppendToLineNodeRec(toLine->next, toLineToAppend);
-	return toLine;
 }
 
 ToLineNode * ToLineNodeGrammarAction(char * path){

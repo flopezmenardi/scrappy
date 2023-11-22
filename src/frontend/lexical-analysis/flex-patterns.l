@@ -33,35 +33,36 @@ variable        [a-zA-Z0-9_]+
 <COMMENT>{endline}+							{ IgnoredPatternAction(yytext, yyleng); }
 <COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
 
-"FROM"                                      { return FromPrefixPatternAction(yytext, yyleng);}
+"from"                                      { return FromPrefixPatternAction(yytext, yyleng);}
 "{"											{ return OpenCurlyBracketPatternAction(yytext); }
 "}"											{ return CloseCurlyBracketPatternAction(yytext); }
-"RETRIEVE"									{ return RetrievePrefixPatternAction(yytext, yyleng); }
-"URL"   									{ return URLPatternAction(yytext, yyleng); }
-"TO"   									    { return ToPrefixPatternAction(yytext, yyleng); }
-"AUTH"   									{ return AuthPrefixPatternAction(yytext, yyleng); }
-"ID"                                        { return IdPatternAction(yytext, yyleng); }
-"USERNAME"                                  { return UsernamePatternAction(yytext, yyleng); }
-"PASSWORD"                                  { return PasswordPatternAction(yytext, yyleng); }
-"VAR"                                       { return VarPatternAction(yytext, yyleng); }
+"retrieve"									{ return RetrievePrefixPatternAction(yytext, yyleng); }
+"url"   									{ return URLPatternAction(yytext, yyleng); }
+"to"   									    { return ToPrefixPatternAction(yytext, yyleng); }
+"auth"   									{ return AuthPrefixPatternAction(yytext, yyleng); }
+"id"                                        { return IdPatternAction(yytext, yyleng); }
+"username"                                  { return UsernamePatternAction(yytext, yyleng); }
+"password"                                  { return PasswordPatternAction(yytext, yyleng); }
+"var"                                       { return VarPatternAction(yytext, yyleng); }
 
-"HTML"                                      { return HtmlPatternAction(yytext, yyleng); }
-"HEAD"                                      { return HeadPatternAction(yytext, yyleng); }
-"TITLE"                                     { return TitlePatternAction(yytext, yyleng); }
-"BODY"                                      { return BodyPatternAction(yytext, yyleng); }
-"H1"                                        { return H1PatternAction(yytext, yyleng); }
-"H2"                                        { return H2PatternAction(yytext, yyleng); }
-"H3"                                        { return H3PatternAction(yytext, yyleng); }
-"H4"                                        { return H4PatternAction(yytext, yyleng); }
-"H5"                                        { return H5PatternAction(yytext, yyleng); }
-"H6"                                        { return H6PatternAction(yytext, yyleng); }
-"IMG"                                       { return ImagePatternAction(yytext, yyleng); }
-"A"                                         { return LinkPatternAction(yytext, yyleng); }
-"P"                                         { return ParagraphPatternAction(yytext, yyleng); }
-"UL"                                        { return UnorderedListPatternAction(yytext, yyleng); }
-"OL"                                        { return OrderedListPatternAction(yytext, yyleng); }
-"DL"                                        { return DefinitionListPatternAction(yytext, yyleng); }
-"LI"                                        { return ListItemPatternAction(yytext, yyleng); }
+"html"                                      { return HtmlPatternAction(yytext, yyleng); }
+"head"                                      { return HeadPatternAction(yytext, yyleng); }
+"title"                                     { return TitlePatternAction(yytext, yyleng); }
+"body"                                      { return BodyPatternAction(yytext, yyleng); }
+"h1"                                        { return H1PatternAction(yytext, yyleng); }
+"h2"                                        { return H2PatternAction(yytext, yyleng); }
+"h3"                                        { return H3PatternAction(yytext, yyleng); }
+"h4"                                        { return H4PatternAction(yytext, yyleng); }
+"h5"                                        { return H5PatternAction(yytext, yyleng); }
+"h6"                                        { return H6PatternAction(yytext, yyleng); }
+"img"                                       { return ImagePatternAction(yytext, yyleng); }
+"a"                                         { return LinkPatternAction(yytext, yyleng); }
+"p"                                         { return ParagraphPatternAction(yytext, yyleng); }
+"ul"                                        { return UnorderedListPatternAction(yytext, yyleng); }
+"ol"                                        { return OrderedListPatternAction(yytext, yyleng); }
+"dl"                                        { return DefinitionListPatternAction(yytext, yyleng); }
+"li"                                        { return ListItemPatternAction(yytext, yyleng); }
+"div"                                       { return DivPatternAction(yytext, yyleng); }
 
 ";"											{ return SemicolonPatternAction(yytext); }
 

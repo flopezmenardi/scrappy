@@ -1,16 +1,16 @@
-FROM { 
-    URL https://www.wikipedia.com/; 
+from { 
+    url https://www.wikipedia.com/; 
 }
-RETRIEVE { 
-    img ID *;
+retrieve { 
+    img;
 }
-TO { 
+to { 
     myname/user/heist;
 }
 
-AUTH { 
-    USERNAME conde;
-    PASSWORD venganza;
+auth { 
+    username conde;
+    password venganza;
 }
 
 

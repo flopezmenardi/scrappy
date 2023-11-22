@@ -143,17 +143,14 @@ void addToList(char *string, list **param_list) {
 
 void addToUrlList(char *string){
     addToList(string, &urlList);
-    printf("added url: %s\n", string);
 }
 
 void addToPathList(char *string){
     addToList(string, &pathList);
-    printf("added path: %s\n", string);
 }
 
 void addToErrorList(char *string){
     addToList(string, &errorList);
-    printf("added error: %s\n", string);
 }
 
 list * getUrlList(){
@@ -222,8 +219,104 @@ void setAuth(char *username, char *password) {
         exit(1);
     }
 
-    printf("Added username: %s\n", symbolTable->username);
-    printf("Added password: %s\n", symbolTable->password);
+}
+
+// Helper function for variable substitution
+char *substituteVariables(char *original) {
+    char *result = strdup(original); // Duplicate the original string
+
+    // Find the position of the first occurrence of '$'
+    char *varStart = strchr(result, '$');
+    while (varStart != NULL) {
+        // Find the end of the variable name
+        char *varEnd = strpbrk(varStart, " \t\n\r/"); // Assuming variables end with space, tab, newline, or '/'
+        if (varEnd == NULL) {
+            varEnd = varStart + strlen(varStart);
+        }
+
+        // Extract the variable name
+        size_t varLength = varEnd - varStart - 1;
+        char *varName = malloc(varLength + 1);
+        strncpy(varName, varStart + 1, varLength);
+        varName[varLength] = '\0';
+
+        // Look up the variable in the symbol table
+        variable_node *currentVar = symbolTable->variable_list->head;
+        char *varValue = NULL;
+        while (currentVar != NULL) {
+            if (strcmp(currentVar->name, varName) == 0) {
+                varValue = currentVar->value;
+                break;
+            }
+            currentVar = currentVar->next;
+        }
+
+        // If the variable is not found, add an error to the error list
+        if (varValue == NULL && strcmp(varName, "HOME") != 0) {
+            addToErrorList("Variable not found: ");
+            addToErrorList(varName);
+        }
+
+        // Substitute the variable in the result string
+        if (varValue != NULL) {
+            size_t prefixLength = varStart - result;
+            size_t suffixLength = strlen(varEnd);
+            size_t resultLength = prefixLength + strlen(varValue) + suffixLength;
+
+            char *newResult = malloc(resultLength + 1);
+            strncpy(newResult, result, prefixLength);
+            strcpy(newResult + prefixLength, varValue);
+            strcpy(newResult + prefixLength + strlen(varValue), varEnd);
+
+            free(result);
+            result = newResult;
+        }
+
+        // Move to the next occurrence of '$'
+        varStart = strchr(varEnd, '$');
+    }
+
+    return result;
+}
+
+
+void interpolate() {
+    // Interpolate in the url_list
+    node *urlNode = symbolTable->url_list->head;
+    while (urlNode != NULL) {
+        char *interpolatedString = substituteVariables(urlNode->string);
+        free(urlNode->string);
+        urlNode->string = interpolatedString;
+
+        // Move to the next node
+        urlNode = urlNode->next;
+    }
+
+    // Interpolate in the tag_list
+    tag_node *tag = symbolTable->tag_list->head;
+    while (tag != NULL) {
+        char *interpolatedName = substituteVariables(tag->name);
+        free(tag->name);
+        tag->name = interpolatedName;
+
+        char *interpolatedId = substituteVariables(tag->id);
+        free(tag->id);
+        tag->id = interpolatedId;
+
+        // Move to the next node
+        tag = tag->next;
+    }
+
+    // Interpolate in the path_list
+    node *pathNode = symbolTable->path_list->head;
+    while (pathNode != NULL) {
+        char *interpolatedString = substituteVariables(pathNode->string);
+        free(pathNode->string);
+        pathNode->string = interpolatedString;
+
+        // Move to the next node
+        pathNode = pathNode->next;
+    }
 }
 
 
@@ -422,6 +515,8 @@ char * getTagString(Tag * tag){
             return "dl";
         case TAG_LI:
             return "li";
+        case TAG_DIV:
+            return "div";
         default:
             return "undefined";
     }

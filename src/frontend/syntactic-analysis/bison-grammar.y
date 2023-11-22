@@ -74,6 +74,7 @@
 %token <tag> OL
 %token <tag> DL
 %token <tag> LI
+%token <tag> DIV
 
 
 // ------------------------ Nuestros data types
@@ -125,7 +126,7 @@ retrieveblock: RETRIEVE OPEN_CURLY_BRACKET retrieveline retrievelinerec CLOSE_CU
 retrievelinerec: retrieveline retrievelinerec															{ $$ = NULL; }
 	| %empty																							{ $$ = NULL; }
 retrieveline: tag ID TYPE_WORD SEMICOLON																{ $$ = RetrieveLineNodeGrammarAction($1,$3); }
-	| tag SEMICOLON																						{ $$ = RetrieveLineNodeGrammarAction($1, NULL); }
+	| tag SEMICOLON																						{ $$ = RetrieveLineNodeGrammarAction($1, ""); }
 
 tag: HTML																								{ $$ = TagHtmlGrammarAction(); }
 	| HEAD																								{ $$ = TagHeadGrammarAction(); }
@@ -144,6 +145,7 @@ tag: HTML																								{ $$ = TagHtmlGrammarAction(); }
 	| OL																								{ $$ = TagOrderedListGrammarAction(); }
 	| DL																								{ $$ = TagDefinitionListGrammarAction(); }
 	| LI																								{ $$ = TagListItemGrammarAction(); }
+	| DIV																								{ $$ = TagDivGrammarAction(); }
 
 toblock: TO OPEN_CURLY_BRACKET toline tolinerec CLOSE_CURLY_BRACKET										{ $$ = ToBlockNodeGrammarAction($3); }
 
