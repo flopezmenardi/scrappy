@@ -1,5 +1,5 @@
-var root = myname;
-var folder = downloads;
+var root myname;
+var folder downloads;
 from { 
     url https://www.google.com/; 
 }

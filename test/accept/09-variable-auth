@@ -1,9 +1,9 @@
 var root myName;
-var username myUsername;
+var u myUser;
 from {
     url https://example.com;
 }
-retriev {
+retrieve {
     p id example;
 }
 to {
@@ -11,7 +11,7 @@ to {
     root/Documents/TLA;
 }
 auth {
-    username username;
+    username $u;
     password myPassword;
 }
 

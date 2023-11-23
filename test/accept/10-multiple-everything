@@ -6,7 +6,7 @@ from {
 retrieve { 
     img;
     a id mainLink;
-    p id body;
+    p;
     p id description;
     p id bio;
 }
@@ -17,6 +17,6 @@ to {
     myname/user/tla;
 }
 auth {
-    username username;
+    username user;
     password myPassword;
 }

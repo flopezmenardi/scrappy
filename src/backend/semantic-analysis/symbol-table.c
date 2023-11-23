@@ -328,6 +328,20 @@ void interpolate() {
         // Pasa al siguiente nodo
         pathNode = pathNode->next;
     }
+
+    // Interpolar en username
+    if (symbolTable->username != NULL) {
+        char *interpolatedString = substituteVariables(symbolTable->username);
+        free(symbolTable->username);
+        symbolTable->username = interpolatedString;
+    }
+
+    // Interpolar en password
+    if (symbolTable->password != NULL) {
+        char *interpolatedString = substituteVariables(symbolTable->password);
+        free(symbolTable->password);
+        symbolTable->password = interpolatedString;
+    }
 }
 
 

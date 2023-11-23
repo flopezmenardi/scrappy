@@ -1,11 +1,11 @@
 from { 
-    url https://www.google.com/ ; 
+    url https://www.google.com/; 
 }
 retrieve { 
     img;
-    a id mainLink ;
-    p id body ;
+    a id mainLink;
+    p;
 }
 to { 
-    myname/user/heist ;
+    myname/user/heist;
 }
