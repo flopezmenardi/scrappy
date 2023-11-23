@@ -52,7 +52,7 @@ const int main(const int argumentCount, const char ** arguments) {
 	}
 	LogInfo("Fin.");
 
-	//printSymbolTable();
+	printSymbolTable();
 
 	freeSymbolTable();
 

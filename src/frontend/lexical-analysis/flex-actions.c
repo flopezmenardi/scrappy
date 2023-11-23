@@ -216,7 +216,7 @@ token UrlTypePatternAction(const char *lexeme, const int length) {
     char *url = (char *)calloc(length + 1, sizeof(char));
     strncpy(url, lexeme, length);
     yylval.string = url;
-
+	
     return TYPE_URL;
 }
 

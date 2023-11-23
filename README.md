@@ -35,10 +35,27 @@ Luego se deberá abrir la solución generada `bin\Compiler.sln` con el IDE _Micr
 
 ## Ejecución
 
-Para compilar un programa, primero cree un archivo vacío denominado `program` (o el nombre que desee), con el siguiente contenido:
+Para compilar un programa, primero cree un archivo vacío denominado `program` (o el nombre que desee), con el contenido válido para el lenguaje definido. Por ejemplo:
 
 ```
-123123 + 123 - 2 * (454 + 890 / 89)
+var root Downloads;
+var sf series;
+
+from { 
+    url https://es.wikipedia.org/wiki/Neon_Genesis_Evangelion; 
+    https://es.wikipedia.org/wiki/Hideaki_Anno;
+    }
+
+retrieve { 
+    div id mw-normal-catlinks;
+    a;
+    h1;
+ }
+
+to { 
+    $root/$sf/evangelion;
+    $root/$sf; 
+}
 ```
 
 Luego, ejecute el compilador desde el directorio raíz del proyecto, o desde cualquier otro lugar indicando el path hacia el script `start.sh` y pasando por parámetro el path hacia el programa a compilar:
@@ -53,23 +70,9 @@ En Windows:
 user@machine:path/ $ script\start.bat program
 ```
 
-Debería obtener el resultado correcto de evaluar el programa anterior: `122318`.
+Debería obtener un archivo titulado `scrappy.js`.
 
-## Testing
-
-En Linux:
-
-```bash
-user@machine:path/ $ script/test.sh
-```
-
-En Windows:
-
-```bash
-user@machine:path/ $ script\test.bat
-```
-
-Si desea agregar nuevos casos de uso, deberá crear un archivo por cada uno, que contenga el programa a testear dentro de las carpetas `test/accept` o `test/reject` según corresponda (es decir, si el mismo debe ser aceptado o rechazado por el compilador).
+## Ejecución del archivo generado
 
 A continuación una breve guía para ejecutar los archivos generados:
 
@@ -92,3 +95,19 @@ Finalmente, para correr el script archivo generado:
 ```bash
 node scrappy.js
 ```
+
+## Testing
+
+En Linux:
+
+```bash
+user@machine:path/ $ script/test.sh
+```
+
+En Windows:
+
+```bash
+user@machine:path/ $ script\test.bat
+```
+
+Si desea agregar nuevos casos de uso, deberá crear un archivo por cada uno, que contenga el programa a testear dentro de las carpetas `test/accept` o `test/reject` según corresponda (es decir, si el mismo debe ser aceptado o rechazado por el compilador).

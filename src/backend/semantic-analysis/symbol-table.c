@@ -221,59 +221,71 @@ void setAuth(char *username, char *password) {
 
 }
 
-// Función auxiliar para la sustitución de variables
 char *substituteVariables(char *original) {
-    char *result = strdup(original); // Duplica el string original
+    char *result = strdup(original); // Duplicate the original string
+    char *cursor = result;
 
-    // Encuentra la posición de la primera ocurrencia de '$'
-    char *varStart = strchr(result, '$');
-    while (varStart != NULL) {
-        // Find the end of the variable name
-        char *varEnd = strpbrk(varStart, " \t\n\r/"); // Asumiendo que las variables terminan con space, tab, newline, o '/'
-        if (varEnd == NULL) {
-            varEnd = varStart + strlen(varStart);
-        }
-
-        // Extrae el nombre de la variable
-        size_t varLength = varEnd - varStart - 1;
-        char *varName = malloc(varLength + 1);
-        strncpy(varName, varStart + 1, varLength);
-        varName[varLength] = '\0';
-
-        // Busca la variable en la tabla de símbolos
-        variable_node *currentVar = symbolTable->variable_list->head;
-        char *varValue = NULL;
-        while (currentVar != NULL) {
-            if (strcmp(currentVar->name, varName) == 0) {
-                varValue = currentVar->value;
-                break;
+    // Iterate through the entire string
+    while (*cursor != '\0') {
+        // Check for the presence of '$'
+        if (*cursor == '$') {
+            // Find the end of the variable name
+            char *varStart = cursor + 1;
+            char *varEnd = strpbrk(varStart, " \t\n\r/");
+            if (varEnd == NULL) {
+                varEnd = varStart + strlen(varStart);
             }
-            currentVar = currentVar->next;
+
+            // Extract the variable name
+            size_t varLength = varEnd - varStart;
+            char *varName = malloc(varLength + 1);
+            strncpy(varName, varStart, varLength);
+            varName[varLength] = '\0';
+
+            // Look up the variable in the symbol table
+            variable_node *currentVar = symbolTable->variable_list->head;
+            char *varValue = NULL;
+            while (currentVar != NULL) {
+                if (strcmp(currentVar->name, varName) == 0) {
+                    varValue = currentVar->value;
+                    break;
+                }
+                currentVar = currentVar->next;
+            }
+
+            // If the variable is not found, add an error to the list
+            if (varValue == NULL && strcmp(varName, "HOME") != 0) {
+                addToErrorList("Variable not found: ");
+                addToErrorList(varName);
+            }
+
+            // Substitute the variable in the result string
+            if (varValue != NULL) {
+                size_t prefixLength = varStart - result - 1;
+                size_t suffixLength = strlen(varEnd);
+                size_t resultLength = prefixLength + strlen(varValue) + suffixLength;
+
+                char *newResult = malloc(resultLength + 1);
+                strncpy(newResult, result, prefixLength);
+                strcpy(newResult + prefixLength, varValue);
+                strcpy(newResult + prefixLength + strlen(varValue), varEnd);
+
+                free(result);
+                result = newResult;
+
+                // Move the cursor to the end of the substituted variable
+                cursor = newResult + prefixLength + strlen(varValue);
+            } else {
+                // Move the cursor to the next character after '$'
+                cursor = varEnd;
+            }
+
+            // Free the memory allocated for varName
+            free(varName);
+        } else {
+            // Move the cursor to the next character
+            cursor++;
         }
-
-        // Si la variable no se encontró, agrega un error a la lista
-        if (varValue == NULL && strcmp(varName, "HOME") != 0) {
-            addToErrorList("Variable not found: ");
-            addToErrorList(varName);
-        }
-
-        // Substituye la variable en el string original
-        if (varValue != NULL) {
-            size_t prefixLength = varStart - result;
-            size_t suffixLength = strlen(varEnd);
-            size_t resultLength = prefixLength + strlen(varValue) + suffixLength;
-
-            char *newResult = malloc(resultLength + 1);
-            strncpy(newResult, result, prefixLength);
-            strcpy(newResult + prefixLength, varValue);
-            strcpy(newResult + prefixLength + strlen(varValue), varEnd);
-
-            free(result);
-            result = newResult;
-        }
-
-        // Pasa a la siguiente ocurrencia de '$'
-        varStart = strchr(varEnd, '$');
     }
 
     return result;
