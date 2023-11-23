@@ -127,15 +127,15 @@ void addToList(char *string, list **param_list) {
         printf("Error: Couldn't allocate memory for the node.\n");
         exit(1);
     }
-    newNode->string = strdup(string); // Assumes you want to copy the string
+    newNode->string = strdup(string);
     newNode->next = NULL;
 
     if ((*param_list)->tail == NULL) {
-        // The list is empty
+        // Lista vacía
         (*param_list)->head = newNode;
         (*param_list)->tail = newNode;
     } else {
-        // Append to the end of the list
+        // Inserta al final de la lista
         (*param_list)->tail->next = newNode;
         (*param_list)->tail = newNode;
     }
@@ -203,17 +203,17 @@ int hasErrors(){
 }
 
 void setAuth(char *username, char *password) {
-    // Allocate memory for the username and copy its content
+    // Reserva memoria para el username y copia su contenido
     symbolTable->username = strdup(username);
     if (symbolTable->username == NULL) {
         printf("Error: Couldn't allocate memory for the username.\n");
         exit(1);
     }
 
-    // Allocate memory for the password and copy its content
+    // Reserva memoria para la contraseña y copia su contenido
     symbolTable->password = strdup(password);
     if (symbolTable->password == NULL) {
-        // Clean up previously allocated memory
+        // Limpiar la memoria previamente reservada
         free(symbolTable->username);
         printf("Error: Couldn't allocate memory for the password.\n");
         exit(1);
@@ -221,26 +221,26 @@ void setAuth(char *username, char *password) {
 
 }
 
-// Helper function for variable substitution
+// Función auxiliar para la sustitución de variables
 char *substituteVariables(char *original) {
-    char *result = strdup(original); // Duplicate the original string
+    char *result = strdup(original); // Duplica el string original
 
-    // Find the position of the first occurrence of '$'
+    // Encuentra la posición de la primera ocurrencia de '$'
     char *varStart = strchr(result, '$');
     while (varStart != NULL) {
         // Find the end of the variable name
-        char *varEnd = strpbrk(varStart, " \t\n\r/"); // Assuming variables end with space, tab, newline, or '/'
+        char *varEnd = strpbrk(varStart, " \t\n\r/"); // Asumiendo que las variables terminan con space, tab, newline, o '/'
         if (varEnd == NULL) {
             varEnd = varStart + strlen(varStart);
         }
 
-        // Extract the variable name
+        // Extrae el nombre de la variable
         size_t varLength = varEnd - varStart - 1;
         char *varName = malloc(varLength + 1);
         strncpy(varName, varStart + 1, varLength);
         varName[varLength] = '\0';
 
-        // Look up the variable in the symbol table
+        // Busca la variable en la tabla de símbolos
         variable_node *currentVar = symbolTable->variable_list->head;
         char *varValue = NULL;
         while (currentVar != NULL) {
@@ -251,13 +251,13 @@ char *substituteVariables(char *original) {
             currentVar = currentVar->next;
         }
 
-        // If the variable is not found, add an error to the error list
+        // Si la variable no se encontró, agrega un error a la lista
         if (varValue == NULL && strcmp(varName, "HOME") != 0) {
             addToErrorList("Variable not found: ");
             addToErrorList(varName);
         }
 
-        // Substitute the variable in the result string
+        // Substituye la variable en el string original
         if (varValue != NULL) {
             size_t prefixLength = varStart - result;
             size_t suffixLength = strlen(varEnd);
@@ -272,7 +272,7 @@ char *substituteVariables(char *original) {
             result = newResult;
         }
 
-        // Move to the next occurrence of '$'
+        // Pasa a la siguiente ocurrencia de '$'
         varStart = strchr(varEnd, '$');
     }
 
@@ -281,18 +281,18 @@ char *substituteVariables(char *original) {
 
 
 void interpolate() {
-    // Interpolate in the url_list
+    // Interpolar en url_list
     node *urlNode = symbolTable->url_list->head;
     while (urlNode != NULL) {
         char *interpolatedString = substituteVariables(urlNode->string);
         free(urlNode->string);
         urlNode->string = interpolatedString;
 
-        // Move to the next node
+        // Pasa al siguiente nodo
         urlNode = urlNode->next;
     }
 
-    // Interpolate in the tag_list
+    // Interpolar en tag_list
     tag_node *tag = symbolTable->tag_list->head;
     while (tag != NULL) {
         char *interpolatedName = substituteVariables(tag->name);
@@ -303,18 +303,18 @@ void interpolate() {
         free(tag->id);
         tag->id = interpolatedId;
 
-        // Move to the next node
+        // Pasa al siguiente nodo
         tag = tag->next;
     }
 
-    // Interpolate in the path_list
+    // Interpolar en path_list
     node *pathNode = symbolTable->path_list->head;
     while (pathNode != NULL) {
         char *interpolatedString = substituteVariables(pathNode->string);
         free(pathNode->string);
         pathNode->string = interpolatedString;
 
-        // Move to the next node
+        // Pasa al siguiente nodo
         pathNode = pathNode->next;
     }
 }
@@ -332,7 +332,7 @@ void initVariableList() {
 }
 
 void freeVariableList() {
-    // Free the variable list and its nodes
+    // Libera la lista de variables y sus nodos
     variable_node *current = variableList->head;
     while (current != NULL) {
         variable_node *next = current->next;
@@ -345,18 +345,18 @@ void freeVariableList() {
 }
 
 void addToVariableList(char *name, char *value) {
-    // Check if the name is repeated
+    // Verifica que el nombre de la variable no esté repetido
     variable_node *current = variableList->head;
     while (current != NULL) {
         if (strcmp(current->name, name) == 0) {
-            // Name is repeated, add an error and return
+            // El nombre está repetido, agrega un error a la lista y retorna
             addToErrorList("Duplicate variable name");
             return;
         }
         current = current->next;
     }
 
-    // Name is not repeated, add to the variable list
+    // El nombre no está repetido, agrega la variable a la lista
     variable_node *newNode = (variable_node *)malloc(sizeof(variable_node));
     if (newNode == NULL) {
         printf("Error: Could not allocate memory for the variable node.\n");
@@ -378,16 +378,16 @@ void addToVariableList(char *name, char *value) {
     newNode->next = NULL;
 
     if (variableList->head == NULL) {
-        // If the list is empty, set the new node as the head
+        // Si la lista está vacía, el nuevo nodo es la cabeza
         variableList->head = newNode;
     } else {
-        // Traverse the list to find the last node
+        // Recorre la lista hasta llegar al último nodo
         current = variableList->head;
         while (current->next != NULL) {
             current = current->next;
         }
 
-        // Append the new node after the last node
+        // Inserta el nuevo nodo al final de la lista
         current->next = newNode;
     }
 }
@@ -398,7 +398,7 @@ variable_list * getVariableList(){
 }
 
 void printVariableList() {
-    // Print the variable list
+    // Imprime la lista de variables
     variable_node *current = variableList->head;
     while (current != NULL) {
         printf("Variable Name: %s, Value: %s\n", current->name, current->value);
@@ -419,7 +419,7 @@ void initTagList() {
 }
 
 void freeTagList() {
-    // Free the tag list and its nodes
+    // Libera la lista de tags y sus nodos
     tag_node *current = tagList->head;
     while (current != NULL) {
         tag_node *next = current->next;
@@ -432,7 +432,7 @@ void freeTagList() {
 }
 
 void addToTagList(char *name, char *id) {
-    // Add to the tag list
+    // Agrega el tag a la lista
     tag_node *newNode = (tag_node *)malloc(sizeof(tag_node));
     if (newNode == NULL) {
         printf("Error: Could not allocate memory for the tag node.\n");
@@ -467,7 +467,7 @@ tag_list * getTagList(){
 }
 
 void printTagList() {
-    // Print the tag list
+    // Imprime la lista de tags
     tag_node *current = tagList->head;
     while (current != NULL) {
         printf("Tag Name: %s, ID: %s\n", current->name, current->id);

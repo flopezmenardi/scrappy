@@ -33,7 +33,7 @@ const int main(const int argumentCount, const char ** arguments) {
 				LogInfo("La compilacion fue exitosa.");
 				LogInfo("Programa valido? '%d'.", state.succeed);
 				interpolate();
-				LogInfo("Interpolando...");
+				LogInfo("Interpolando variables...");
 				Generator(state.result, symbolTable);
 			}
 			else {

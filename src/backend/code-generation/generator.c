@@ -25,7 +25,7 @@ void Generator(int result, symbol_table *symbolTable) {
     }
 
 	generatePreviousCode(filePointer);
-    // Generate arrays
+    // Generación de arrays
     generateUrlsArray(symbolTable->url_list, filePointer);
     generateTagsArray(symbolTable->tag_list, filePointer);
     generatePathsArray(symbolTable->path_list, filePointer);
@@ -86,26 +86,24 @@ void generateAuth(char *username, char *password, FILE *filePointer) {
 }
 
 void generatePreviousCode(FILE *filePointer) {
-    // Check if the file pointer is valid
+    // Verificar si el puntero al archivo es válido
     if (filePointer == NULL) {
-        // Handle the error or return, depending on your requirements
         return;
     }
 
-    // Write the JavaScript code to the file
+    // Escribir el código JavaScript en el archivo
     fprintf(filePointer, "const fs = require('fs').promises;\n");
     fprintf(filePointer, "const puppeteer = require('puppeteer');\n");
     fprintf(filePointer, "const path = require('path');\n");
 }
 
 void generateFollowingCode(FILE *filePointer) {
-    // Check if the file pointer is valid
+    // Verificar si el puntero al archivo es válido
     if (filePointer == NULL) {
-        // Handle the error or return, depending on your requirements
         return;
     }
 
-    // Write the JavaScript code to the file
+    // Escribir el código JavaScript en el archivo
     fprintf(filePointer, "if (tagIdPairs.length === 0) {\n");
     fprintf(filePointer, "    console.error('Tag-id pairs array should not be empty.');\n");
     fprintf(filePointer, "    process.exit(1);\n");

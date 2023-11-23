@@ -1,8 +1,8 @@
 [![✗](https://img.shields.io/badge/Release-v0.3.0-ffb600.svg?style=for-the-badge)](https://github.com/agustin-golmar/Flex-Bison-Compiler/releases)
 
-# Compilador Flex/Bison
+# Scrappy: Compilador orientado a web scrapping mediante Puppeteer
 
-Un compilador vacío de ejemplo construido con Flex y Bison.
+Un compilador que permite al usuario realizar operaciones básicas de web scrapping con agilidad construido con Flex y Bison.
 
 ## Requerimientos
 
@@ -70,3 +70,25 @@ user@machine:path/ $ script\test.bat
 ```
 
 Si desea agregar nuevos casos de uso, deberá crear un archivo por cada uno, que contenga el programa a testear dentro de las carpetas `test/accept` o `test/reject` según corresponda (es decir, si el mismo debe ser aceptado o rechazado por el compilador).
+
+A continuación una breve guía para ejecutar los archivos generados:
+
+Primero será necesario descargar e instalar Node.js desde su [sitio oficial](https://nodejs.org/en).
+
+Luego, desde el directorio en el cual se encuentra el archivo generado:
+
+```bash
+npm init -y
+```
+
+En caso de no haber sido descargada prevuamente la librería de Puppeteer:
+
+```bash
+npm install puppeteer
+```
+
+Finalmente, para correr el script archivo generado:
+
+```bash
+node scrappy.js
+```
