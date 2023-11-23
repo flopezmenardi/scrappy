@@ -60,10 +60,6 @@ void printSymbolTable(){
     if(symbolTable == NULL){
         return;
     }
-    if(hasErrors()){
-        printf("Errors:\n");
-        printList(errorList);
-    }
     if(hasVariables){
         printf("Variables:\n");
         printVariableList();
@@ -175,23 +171,26 @@ void printList(list *param_list) {
 }
 
 void printUrlList(){
+    printf("URLs:\n");
     printList(urlList);
 }
 
 void printPathList(){
+    printf("Paths:\n");
     printList(pathList);
 }
 
 void printErrorList(){
+    printf("Errores:\n");
     printList(errorList);
 }
 
 int hasUrls(){
-    return urlList != NULL;
+    return urlList->head != NULL;
 }
 
 int hasPaths(){
-    return pathList != NULL;
+    return pathList->head != NULL;
 }
 
 int hasAuth(){
@@ -199,7 +198,7 @@ int hasAuth(){
 }
 
 int hasErrors(){
-    return errorList != NULL;
+    return errorList->head != NULL;
 }
 
 void setAuth(char *username, char *password) {
@@ -222,27 +221,27 @@ void setAuth(char *username, char *password) {
 }
 
 char *substituteVariables(char *original) {
-    char *result = strdup(original); // Duplicate the original string
+    char *result = strdup(original); // Duplicar el string original
     char *cursor = result;
 
-    // Iterate through the entire string
+    // Iterar sobre el string resultante
     while (*cursor != '\0') {
-        // Check for the presence of '$'
+        // Buscar el siguiente caracter '$'
         if (*cursor == '$') {
-            // Find the end of the variable name
+            // Encontrar el final del nombre de la variable
             char *varStart = cursor + 1;
             char *varEnd = strpbrk(varStart, " \t\n\r/");
             if (varEnd == NULL) {
                 varEnd = varStart + strlen(varStart);
             }
 
-            // Extract the variable name
+            // Extraer el final del nombre de la variable
             size_t varLength = varEnd - varStart;
             char *varName = malloc(varLength + 1);
             strncpy(varName, varStart, varLength);
             varName[varLength] = '\0';
 
-            // Look up the variable in the symbol table
+            // Buscar la variable en la tabla de símbolos
             variable_node *currentVar = symbolTable->variable_list->head;
             char *varValue = NULL;
             while (currentVar != NULL) {
@@ -253,13 +252,13 @@ char *substituteVariables(char *original) {
                 currentVar = currentVar->next;
             }
 
-            // If the variable is not found, add an error to the list
+            // Si la variable no existe, agregar un error a la lista
             if (varValue == NULL && strcmp(varName, "HOME") != 0) {
                 addToErrorList("Variable not found: ");
                 addToErrorList(varName);
             }
 
-            // Substitute the variable in the result string
+            // Susituir la variable en el string resultante
             if (varValue != NULL) {
                 size_t prefixLength = varStart - result - 1;
                 size_t suffixLength = strlen(varEnd);
@@ -273,17 +272,17 @@ char *substituteVariables(char *original) {
                 free(result);
                 result = newResult;
 
-                // Move the cursor to the end of the substituted variable
+                // Mover el cursor al siguiente caracter después de la variable
                 cursor = newResult + prefixLength + strlen(varValue);
             } else {
-                // Move the cursor to the next character after '$'
+                // Mover el cursor al siguiente caracter después de '$'
                 cursor = varEnd;
             }
 
-            // Free the memory allocated for varName
+            // Liberar la memoria reservada para el nombre de la variable
             free(varName);
         } else {
-            // Move the cursor to the next character
+            // Mover el cursor al siguiente caracter
             cursor++;
         }
     }
@@ -411,6 +410,7 @@ variable_list * getVariableList(){
 
 void printVariableList() {
     // Imprime la lista de variables
+    printf("Variables:\n");
     variable_node *current = variableList->head;
     while (current != NULL) {
         printf("Variable Name: %s, Value: %s\n", current->name, current->value);
@@ -480,6 +480,7 @@ tag_list * getTagList(){
 
 void printTagList() {
     // Imprime la lista de tags
+    printf("Tags:\n");
     tag_node *current = tagList->head;
     while (current != NULL) {
         printf("Tag Name: %s, ID: %s\n", current->name, current->id);

@@ -30,14 +30,21 @@ const int main(const int argumentCount, const char ** arguments) {
 			// La variable "succeed" es la que setea Bison al identificar el símbolo
 			// inicial de la gramática satisfactoriamente.
 			if (state.succeed) {
-				LogInfo("La compilacion fue exitosa.");
-				LogInfo("Programa valido? '%d'.", state.succeed);
+				LogInfo("La compilación fue exitosa.");
 				interpolate();
-				LogInfo("Interpolando variables...");
-				Generator(state.result, symbolTable);
+				LogInfo("Interpolación finalizada.");
+				if(hasErrors() != 0) {
+					LogError("Se produjeron uno o más errores en la aplicacion.");
+					printErrorList();
+					return -1;
+				}
+				else{
+					LogInfo("Programa valido? '%d'.", state.succeed);
+					Generator(state.result, symbolTable);
+				}
 			}
 			else {
-				LogError("Se produjo un error en la aplicacion.");
+				LogError("Se produjeron uno o más errores en la aplicacion.");
 				return -1;
 			}
 			break;
@@ -51,8 +58,6 @@ const int main(const int argumentCount, const char ** arguments) {
 			LogError("Error desconocido mientras se ejecutaba el analizador Bison (codigo %d).", result);
 	}
 	LogInfo("Fin.");
-
-	printSymbolTable();
 
 	freeSymbolTable();
 

@@ -50,6 +50,7 @@ retrieve {
     div id mw-normal-catlinks;
     a;
     h1;
+    img;
  }
 
 to { 
