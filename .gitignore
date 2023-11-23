@@ -18,6 +18,7 @@ bison-parser.c
 bison-parser.h
 flex-scanner.c
 program
+program_auth
 random.md
 .bash_history
 scrappy.js

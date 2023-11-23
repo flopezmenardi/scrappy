@@ -120,6 +120,14 @@ void generateFollowingCode(FILE *filePointer) {
     fprintf(filePointer, "                const browser = await puppeteer.launch({ headless: 'new' });\n");
     fprintf(filePointer, "                const page = await browser.newPage();\n\n");
 
+	fprintf(filePointer, "                if (username != null && password!= null) {\n");
+	fprintf(filePointer, "                    await page.goto('https://campus.itba.edu.ar/');\n");
+	fprintf(filePointer, "                    await page.type('#user_id', username);\n");
+	fprintf(filePointer, "                    await page.type('#password', password);\n");
+	fprintf(filePointer, "                    await page.click('#entry-login.button.expand.inverse.outline');\n");
+	fprintf(filePointer, "                    await page.waitForNavigation();\n");
+	fprintf(filePointer, "                }\n\n");
+
     fprintf(filePointer, "                await page.goto(url);\n\n");
 
     fprintf(filePointer, "                let data;\n\n");

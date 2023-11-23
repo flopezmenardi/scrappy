@@ -43,19 +43,40 @@ var sf series;
 
 from { 
     url https://es.wikipedia.org/wiki/Neon_Genesis_Evangelion; 
-    https://es.wikipedia.org/wiki/Hideaki_Anno;
-    }
+    url https://es.wikipedia.org/wiki/Hideaki_Anno;
+}
 
 retrieve { 
     div id mw-normal-catlinks;
     a;
     h1;
     img;
- }
+}
 
 to { 
     $root/$sf/evangelion;
     $root/$sf; 
+}
+```
+
+o
+
+```
+from { 
+    url https://campus.itba.edu.ar/ultra/courses/_27584_1/outline;
+}
+
+retrieve { 
+    html;
+    img;
+}
+
+to { 
+    Facultad/campus;
+}
+auth {
+    username campus_username;
+    password campus_password;
 }
 ```
 
