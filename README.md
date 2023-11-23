@@ -80,6 +80,8 @@ auth {
 }
 ```
 
+**Se debe reemplazar el usuario y constraseña del ejemplo por credenciales válidas de campus, en caso contrario al ejecutar el archivo de JavaScript generado no funcionará.**
+
 Luego, ejecute el compilador desde el directorio raíz del proyecto, o desde cualquier otro lugar indicando el path hacia el script `start.sh` y pasando por parámetro el path hacia el programa a compilar:
 
 ```bash
